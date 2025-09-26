@@ -1,11 +1,13 @@
 import os
 from flask import Flask, render_template
+from flask_font_awesome import FontAwesome
 from utils.weather import fetch_weather
-from weasyprint import HTML
+import imgkit
 from PIL import Image
 from inky.auto import auto
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+font_awesome = FontAwesome(app)
 
 def render_dashboard_to_png(output_path="dashboard.png"):
     # Get weather data
@@ -13,10 +15,15 @@ def render_dashboard_to_png(output_path="dashboard.png"):
 
     # Render HTML with Jinja
     with app.app_context():
-        html = render_template("dashboard.html", **weather_data)
+        css_path = f"file://{os.path.abspath('static/dist/output.css')}"
+        html = render_template("dashboard.html", **weather_data, css_path=css_path)
+
+    options = {
+        "enable-local-file-access": None
+    }
 
     # Convert HTML → PNG
-    HTML(string=html, base_url=os.getcwd()).write_png(output_path)
+    imgkit.from_string(html, output_path, options=options)
 
     return output_path
 
