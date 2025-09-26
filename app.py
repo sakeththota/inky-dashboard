@@ -1,3 +1,4 @@
+import os
 import requests
 from flask import Flask, render_template
 from flask_font_awesome import FontAwesome
@@ -85,37 +86,39 @@ def weather_dashboard():
             "description": WEATHER_CODES.get(code, {"desc": "Unknown"})["desc"],
             "icon": WEATHER_CODES.get(code, {"icon": "fa-sun"})["icon"]
         })
-
-    return render_template(
-        "dashboard.html",
-        units="imperial",
-        title="Weather Dashboard",
-        current_date=datetime.now().strftime("%a, %b %d"),
-        last_refresh_time=datetime.now().strftime("%H:%M"),
-        current_day_icon=WEATHER_CODES.get(current_weather['weathercode'], {"icon":"fa-sun"})["icon"],
-        current_temperature=round((current_weather['temperature'])*(9/5)+32),
-        temperature_unit="°F",
-        forecast=forecast,
-        data_points=[
-            {
-                "icon": "fa-wind",
-                "label": "Wind",
-                "measurement": windspeed_mph,
-                "unit": "mph",
+    with open('static/dist/output.css') as f:
+        tailwind_css = f.read()
+        return render_template(
+            "dashboard.html",
+            tailwind_css=tailwind_css,
+            units="imperial",
+            title="Weather Dashboard",
+            current_date=datetime.now().strftime("%a, %b %d"),
+            last_refresh_time=datetime.now().strftime("%H:%M"),
+            current_day_icon=WEATHER_CODES.get(current_weather['weathercode'], {"icon":"fa-sun"})["icon"],
+            current_temperature=round((current_weather['temperature'])*(9/5)+32),
+            temperature_unit="°F",
+            forecast=forecast,
+            data_points=[
+                {
+                    "icon": "fa-wind",
+                    "label": "Wind",
+                    "measurement": windspeed_mph,
+                    "unit": "mph",
+                },
+                {"icon": "fa-sun", "label": "UV", "measurement": 3, "unit": ""},
+            ],
+            hourly_forecast=hourly_data,
+            plugin_settings={
+                "displayRefreshTime": "true",
+                "displayMetrics": "true",
+                "displayGraph": "true",
+                "displayForecast": "true",
+                "forecastDays": "3",
+                "moonPhase": "true",
+                "textColor": "#000",
             },
-            {"icon": "fa-sun", "label": "UV", "measurement": 3, "unit": ""},
-        ],
-        hourly_forecast=hourly_data,
-        plugin_settings={
-            "displayRefreshTime": "true",
-            "displayMetrics": "true",
-            "displayGraph": "true",
-            "displayForecast": "true",
-            "forecastDays": "3",
-            "moonPhase": "true",
-            "textColor": "#000",
-        },
-    )
+        )
 
 if __name__ == "__main__":
     app.run(debug=True)

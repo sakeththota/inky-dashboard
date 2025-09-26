@@ -12,12 +12,12 @@
         border: 1px solid #ccc;
         padding: 1rem;
       }
+      {{ tailwind_css | safe }}
     </style>
     {{ font_awesome.load_css() }}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ css_path }}">
   </head>
   <body>
     {% block content %}{% endblock %}
