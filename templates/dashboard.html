@@ -4,22 +4,43 @@
 <div id="units-container" data-units="{{ units }}"></div>
 
 <div class="dashboard">
-  <div class="weather-card border-2 rounded-lg w-1/4">
-    <div class="flex flex-row justify-between items-center">
-      <div class="flex flex-col ">
-        <p>sunny</p>
-        <p>36º</p>
-        <p>42º/28º</p>
-      </div>
-      <div>
-        <div>
-          <p>23:56</p>
-          <p>Mon 08-23</p>
+  <div class="weather-card border-2 rounded-lg p-2 h-28">
+    <div class="flex flex-row justify-between items-center h-full">
+
+      <!-- Left side: Current weather -->
+      <div class="flex flex-col justify-evenly h-full">
+        <div class="flex flex-row gap-2 items-center">
+          <!-- Current weather icon -->
+          <span class="fas {{ forecast[0].icon }}"></span>
+          <p class="text-base">{{ forecast[0].description }}</p>
         </div>
-        <p>San Francisco</p>
+        <!-- Current temperature -->
+        <p class="text-5xl">{{ current_temperature }}{{ temperature_unit }}</p>
+        <!-- Today's high / low -->
+        <p class="text-xs">{{ forecast[0].high }}{{ temperature_unit }}/{{ forecast[0].low }}{{ temperature_unit }}</p>
       </div>
+
+      <!-- Right side: Time, date, location -->
+      <div class="flex flex-col justify-between text-right items-end h-full">
+        <div>
+          <p class="text-lg">{{ last_refresh_time }}</p>
+          <p class="text-xs">{{ current_date }}</p>
+        </div>
+        <p class="text-xs">Chicago, IL</p>
+      </div>
+
     </div>
-    <div class="upcoming-dotw"></div>
+
+    <!--
+    <div class="upcoming-dotw flex mt-2">
+      {% for day in forecast[1:5] %}
+        <div class="flex flex-row items-center justufy-center p-1 text-xs gap-2">
+          <p>{{ day.day[:3] }}</p>
+          <span class="fas {{ day.icon }}"></span>
+        </div>
+      {% endfor %}
+    </div>
+    -->
   </div>
 </div>
 
