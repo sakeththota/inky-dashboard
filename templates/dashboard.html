@@ -1,0 +1,26 @@
+{% extends "plugin.html" %}
+
+{% block content %}
+<div id="units-container" data-units="{{ units }}"></div>
+
+<div class="dashboard">
+  <div class="weather-card border-2 rounded-lg w-1/4">
+    <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-col ">
+        <p>sunny</p>
+        <p>36º</p>
+        <p>42º/28º</p>
+      </div>
+      <div>
+        <div>
+          <p>23:56</p>
+          <p>Mon 08-23</p>
+        </div>
+        <p>San Francisco</p>
+      </div>
+    </div>
+    <div class="upcoming-dotw"></div>
+  </div>
+</div>
+
+{% endblock %}

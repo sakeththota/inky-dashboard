@@ -1,0 +1,21 @@
+<!-- templates/plugin.html -->
+<html>
+  <head>
+    <title>Plugin Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        background: #fafafa;
+      }
+      .weather-dashboard {
+        border: 1px solid #ccc;
+        padding: 1rem;
+      }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/output.css')}}">
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+</html>
